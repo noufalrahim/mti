@@ -13,6 +13,13 @@ jobs:
       - name: 📥 Checkout code
         uses: actions/checkout@v4
 
+      - name: 🔧 Create .env file
+        run: |
+          echo "SPRING_APPLICATION_NAME=${{ secrets.SPRING_APPLICATION_NAME }}" >> .env
+          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> .env
+          echo "SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}" >> .env
+          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> .env
+
       - name: 🔐 Login to Docker Hub
         uses: docker/login-action@v3
         with:
@@ -21,7 +28,7 @@ jobs:
 
       - name: 🏗️ Build Docker image
         run: |
-          docker build -t noufalrahim/tinysteps:latest .
+          docker build --build-arg ENV_VAR_1=${{ secrets.ENV_VAR_1 }} --build-arg ENV_VAR_2=${{ secrets.ENV_VAR_2 }} -t noufalrahim/tinysteps:latest .
 
       - name: 📤 Push Docker image to Docker Hub
         run: |

@@ -22,7 +22,7 @@ public class QuestionService {
         boolean questionExist = questionRepository.findByQuestionEnglish(question.getQuestionEnglish()).isPresent();
         boolean categoryExist = !questionRepository.findByCategoryId(question.getCategory().getId()).isEmpty();
         boolean ageGroupExist = !questionRepository.findByAgeGroupId(question.getAgeGroup().getId()).isEmpty();
-
+        
         if (questionExist) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Question already exists");
         }
