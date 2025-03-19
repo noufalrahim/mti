@@ -19,15 +19,15 @@ import com.tinysteps.tinysteps.service.ChildResponseService;
 public class ChildResponseController {
 
     @Autowired
-    private ChildResponseService ChildResponseService;
+    private ChildResponseService childresponseService;
 
     @GetMapping("")
     public List<ChildResponseModel> getAllChildResponse() {
-        return ChildResponseService.getAllChildResponse();
+        return childresponseService.getAllChildResponse();
     }
 
     @PostMapping("/add")
     public String addChildResponse(@RequestBody ChildResponseModel childresponseModel) {
-        return ChildResponseService.addChildResponse(childresponseModel.getName());
+        return childresponseService.addChildResponse(childresponseModel.getName());
     }
 }

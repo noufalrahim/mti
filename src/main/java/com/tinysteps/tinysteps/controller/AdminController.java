@@ -17,15 +17,14 @@ import com.tinysteps.tinysteps.service.AdminService;
 public class AdminController {
 
     @Autowired
-    private AdminService AdminService;
+    private AdminService adminService;
 
     @GetMapping("")
     public List<AdminModel> getAllAdmin() {
-        return AdminService.getAllAdmin();
-    }
-
+        return adminService.getAllAdmin();
+}
     @PostMapping("/add")
     public String addAdmin(@RequestBody AdminModel adminModel) {
-        return AdminService.addAdmin(adminModel.getName());
+        return adminService.addAdmin(adminModel.getName());
     }
 }

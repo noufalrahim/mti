@@ -36,5 +36,5 @@ public class AdminModel {
     private boolean hasEditAccess;
 
     @Column(nullable = false)
-    private boolean hasDelitAccess;
+    private boolean hasDeleteAccess;
 }
