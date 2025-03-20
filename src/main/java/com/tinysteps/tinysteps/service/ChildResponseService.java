@@ -1,7 +1,6 @@
 package com.tinysteps.tinysteps.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,15 +24,20 @@ public class ChildResponseService {
         return childresponseRepository.findAll();
     }
 
-    public String addChildResponse(String name) {
-        Optional<ChildResponseModel> existinChildResponse = childresponseRepository.findByName(name);
-        if (existinChildResponse.isPresent()) {
-            return "ChildResponse already exists!";
-        }
+    // public String addChildResponse(String name) {
+    //     Optional<ChildResponseModel> existinChildResponse = childresponseRepository.findByName(name);
+    //     if (existinChildResponse.isPresent()) {
+    //         return "ChildResponse already exists!";
+    //     }
 
-        newChildResponse.setName(name);
-        childresponseRepository.save(newChildResponse);
+    //     newChildResponse.setName(name);
+    //     childresponseRepository.save(newChildResponse);
 
-        return "childresponse added successfully!";
+    //     return "childresponse added successfully!";
+    // }
+
+    public String addChildResponse(ChildResponseModel childResponseModel) {
+        childresponseRepository.save(childResponseModel);
+        return "Child Response added successfully";
     }
 }

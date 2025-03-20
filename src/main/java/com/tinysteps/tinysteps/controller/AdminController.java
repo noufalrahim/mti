@@ -13,7 +13,7 @@ import com.tinysteps.tinysteps.model.AdminModel;
 import com.tinysteps.tinysteps.service.AdminService;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admins")
 public class AdminController {
 
     @Autowired
@@ -22,7 +22,8 @@ public class AdminController {
     @GetMapping("")
     public List<AdminModel> getAllAdmin() {
         return adminService.getAllAdmin();
-}
+    }
+
     @PostMapping("/add")
     public String addAdmin(@RequestBody AdminModel adminModel) {
         return adminService.addAdmin(adminModel.getName());

@@ -36,4 +36,30 @@ public class CategoryService {
 
         return "Category added successfully!";
     }
+
+    public String editCategory(CategoryModel categoryModel) {
+        Long id = categoryModel.getId();
+        Optional<CategoryModel> existingCategory = categoryRepository.findById(id);
+        System.out.print(existingCategory);
+
+        if (!existingCategory.isPresent()) {
+            return "No category exists with the given ID!";
+        }
+    
+        categoryRepository.save(categoryModel);
+    
+        return "Category updated successfully!";
+    }
+
+    public String deleteCategory(Long id) {
+        Optional<CategoryModel> existingCategory = categoryRepository.findById(id);
+        
+        if (!existingCategory.isPresent()) {
+            return "No category exists with the given ID!";
+        }
+    
+        categoryRepository.deleteById(id);
+        return "Category deleted successfully!";
+    }
+    
 }

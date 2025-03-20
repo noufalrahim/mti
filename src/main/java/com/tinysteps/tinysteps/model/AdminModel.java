@@ -28,7 +28,7 @@ public class AdminModel {
 
     @Column(unique = true, nullable = false)
     private String name;
-    
+
     @Column(nullable = false)
     private boolean isSuperAdmin;
 

@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tinysteps.tinysteps.model.ChildResponseModel;
-//import com.tinysteps.tinysteps.model.ChildResponseModel;
-//import com.tinysteps.tinysteps.service.ChildResponseService;
 import com.tinysteps.tinysteps.service.ChildResponseService;
 
+
 @RestController
-@RequestMapping("/api/childresponse")
+@RequestMapping("/api/childresponses")
 public class ChildResponseController {
 
     @Autowired
@@ -28,6 +27,6 @@ public class ChildResponseController {
 
     @PostMapping("/add")
     public String addChildResponse(@RequestBody ChildResponseModel childresponseModel) {
-        return childresponseService.addChildResponse(childresponseModel.getName());
+        return childresponseService.addChildResponse(childresponseModel);
     }
 }
