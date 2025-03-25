@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tinysteps.tinysteps.model.CategoryModel;
 import com.tinysteps.tinysteps.service.CategoryService;
 
-
 @RestController
 @RequestMapping("/api/category")
 public class CategoryController {

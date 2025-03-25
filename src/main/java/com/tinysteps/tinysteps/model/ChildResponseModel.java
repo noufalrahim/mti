@@ -29,16 +29,16 @@ public class ChildResponseModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="question_id", nullable=false)
-    private QuestionModel Question;
+    @JoinColumn(name="question_id", referencedColumnName = "id", nullable=false)
+    private QuestionModel question;
 
     @Column(nullable=false)
-    private boolean isQuestionAnswered;
+    private Boolean questionAnswered;
 
     @Column()
-    private boolean isAnsweredYes;
+    private Boolean answeredYes;
 
     @ManyToOne
-    @JoinColumn(name="child_id", nullable = false)
+    @JoinColumn(name="child_id", referencedColumnName = "id", nullable = false)
     private ChildModel child;
 }

@@ -1,10 +1,12 @@
 package com.tinysteps.tinysteps.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import com.tinysteps.tinysteps.service.ChildService;
 @RequestMapping("/api/child")
 public class ChildController {
 
+    // private static final Logger logger = LoggerFactory.getLogger(ChildController.class);
     @Autowired
     private ChildService childService;
 
@@ -25,8 +28,14 @@ public class ChildController {
         return childService.getAllChild();
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Map<String, Object>> getMethodName(@PathVariable Long id) {
+        return childService.getAllChildrenOfUser(id);
+    }
+
     @PostMapping("/add")
-    public ResponseEntity<String> addChild(@RequestBody ChildModel child) {
+    public ResponseEntity<Map<String, Object>> addChild(@RequestBody ChildModel child) {
+        // logger.info("Child received: {}", child);
         return childService.addChild(child);
     }
 }
