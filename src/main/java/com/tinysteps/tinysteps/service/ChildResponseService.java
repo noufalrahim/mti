@@ -87,22 +87,39 @@ public class ChildResponseService {
     public ResponseEntity<Map<String, Object>> getChildProgress(Long childId) {
         List<CategoryModel> categories = categoryRepository.findAll();
         List<ChildResponseModel> childResponses = childResponseRepository.findByChildId(childId);
-    
+        List<Map<String, Object>> formattedData = new ArrayList<>();
+
         if (childResponses.isEmpty()) {
             System.out.println("No responses found for child ID: " + childId);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("message", "No responses found for this child", "data", Collections.emptyList()));
+            for (CategoryModel category : categories) {
+                List<ChildResponseModel> answeredYes = new ArrayList<>();
+                List<ChildResponseModel> answeredNo = new ArrayList<>();
+                List<ChildResponseModel> notAnswered = new ArrayList<>();
+
+                List<QuestionModel> totalQuestions = questionRepository.findByCategoryId(category.getId());
+                Map<String, Object> categoryData = Map.of(
+                        "category", category.getName(),
+                        "progress", Map.of(
+                                "totalQuestions", totalQuestions.size(),
+                                "answeredYes", answeredYes,
+                                "answeredNo", answeredNo,
+                                "notAnswered", notAnswered
+                        )
+                );
+                formattedData.add(categoryData);
+            }
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(Map.of("message", "No responses found for this child", "data", formattedData));
         }
-    
-        List<Map<String, Object>> formattedData = new ArrayList<>();
-    
+
+
         for (CategoryModel category : categories) {
             List<ChildResponseModel> answeredYes = new ArrayList<>();
             List<ChildResponseModel> answeredNo = new ArrayList<>();
             List<ChildResponseModel> notAnswered = new ArrayList<>();
-    
+
             List<QuestionModel> totalQuestions = questionRepository.findByCategoryId(category.getId());
-    
+
             for (ChildResponseModel response : childResponses) {
                 if (response.getQuestion().getCategory().getId().equals(category.getId())) {
                     if (response.getQuestionAnswered()) {
@@ -116,7 +133,7 @@ public class ChildResponseService {
                     }
                 }
             }
-    
+
             Map<String, Object> categoryData = Map.of(
                     "category", category.getName(),
                     "progress", Map.of(
@@ -126,11 +143,11 @@ public class ChildResponseService {
                             "notAnswered", notAnswered
                     )
             );
-    
+
             formattedData.add(categoryData);
         }
-    
+
         return ResponseEntity.ok(Map.of("message", "Child progress retrieved successfully", "data", formattedData));
     }
-    
+
 }
