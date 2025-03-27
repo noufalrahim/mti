@@ -1,6 +1,5 @@
 package com.tinysteps.tinysteps.service;
 
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -31,38 +30,36 @@ public class ChildService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("message", "User is required", "data", Collections.emptyList()));
         }
-
+    
         Optional<UserModel> userOpt = userRepository.findById(child.getUser().getId());
         if (userOpt.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("message", "User not found", "data", Collections.emptyList()));
         }
-
+    
         UserModel user = userOpt.get();
         child.setUser(user);
-
+    
         Optional<ChildModel> childExists = childRepository.findByNameAndUserId(child.getName(), user.getId());
+    
         if (childExists.isPresent()) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("message", "Child already exists", "data", Collections.emptyList()));
         }
-
-        // **Set default date of birth if null**
-        if (child.getDateOfBirth() == null) {
-            child.setDateOfBirth(LocalDate.now());  // Default to today's date
-        }
-
+    
         childRepository.save(child);
-
+    
         List<ChildModel> children = childRepository.findByUser(user);
         if (children.size() == 1) {
             user.setDefaultChild(child);
             userRepository.save(user);
         }
-
+    
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(Map.of("message", "Created new child", "data", child));
     }
+    
+    
 
     public ResponseEntity<List<ChildModel>> getAllChild() {
         List<ChildModel> children = childRepository.findAll();
@@ -81,5 +78,33 @@ public class ChildService {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(Map.of("message", "Data fetched successfully", "data", children));
+    }
+    public ResponseEntity<Map<String, Object>> deleteChild(Long id) {
+        Optional<ChildModel> existingChild = childRepository.findById(id);
+
+        if (!existingChild.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Child is missing or invalid", "data", Collections.emptyMap()));
+        
+        }
+
+        childRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK)
+        .body(Map.of("message", "Child deleted s", "data", Collections.emptyMap()));
+
+
+    }
+    public String editChild(ChildModel childModel) {
+        Long id = childModel.getId();
+        Optional<ChildModel> existingChild = childRepository.findById(id);
+        System.out.print(existingChild);
+
+        if (!existingChild.isPresent()) {
+            return "No child exists with the given ID!";
+        }
+
+        childRepository.save(childModel);
+
+        return "Child updated successfully!";
     }
 }

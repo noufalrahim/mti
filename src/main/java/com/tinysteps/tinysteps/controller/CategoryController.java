@@ -1,8 +1,10 @@
 package com.tinysteps.tinysteps.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,26 +22,26 @@ import com.tinysteps.tinysteps.service.CategoryService;
 public class CategoryController {
 
     @Autowired
-    private CategoryService CategoryService;
+    private CategoryService categoryService;
 
     @GetMapping("")
     public List<CategoryModel> getAllCategory() {
-        return CategoryService.getAllCategory();
+        return categoryService.getAllCategory();
     }
 
     @PostMapping("/add")
     public String addCategory(@RequestBody CategoryModel categoryModel) {
-        return CategoryService.addCategory(categoryModel.getName());
+        return categoryService.addCategory(categoryModel.getName());
     }
 
     @PutMapping("edit/{id}")
     public String editCategory(@RequestBody CategoryModel categoryModel) {
-        return CategoryService.editCategory(categoryModel);
+        return categoryService.editCategory(categoryModel);
     }
 
     @DeleteMapping("delete/{id}")
-    public String deleteCategory(@PathVariable String id) {
+    public ResponseEntity<Map<String, Object>> deleteCategory(@PathVariable String id) {
         Long categoryId = Long.valueOf(id);
-        return CategoryService.deleteCategory(categoryId);
+        return categoryService.deleteCategory(categoryId);
     }
 }

@@ -1,9 +1,13 @@
 package com.tinysteps.tinysteps.service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.tinysteps.tinysteps.model.CategoryModel;
@@ -51,15 +55,20 @@ public class CategoryService {
         return "Category updated successfully!";
     }
 
-    public String deleteCategory(Long id) {
+    public ResponseEntity<Map<String, Object>> deleteCategory(Long id) {
         Optional<CategoryModel> existingCategory = categoryRepository.findById(id);
 
         if (!existingCategory.isPresent()) {
-            return "No category exists with the given ID!";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("message", "Category is missing or invalid", "data", Collections.emptyMap()));
+        
         }
 
         categoryRepository.deleteById(id);
-        return "Category deleted successfully!";
+        return ResponseEntity.status(HttpStatus.OK)
+        .body(Map.of("message", "Category deleted s", "data", Collections.emptyMap()));
+
+
     }
 
 }
