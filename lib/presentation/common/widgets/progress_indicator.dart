@@ -5,8 +5,10 @@ class ProgressIndicatorWidget extends StatelessWidget {
 
   final Color progressColor;
   final Color backgroundColor;
+  final double progress;
+  final String progressText;
 
-  const ProgressIndicatorWidget({super.key, required this.backgroundColor, required this.progressColor});
+  const ProgressIndicatorWidget({super.key, required this.backgroundColor, required this.progressColor, required this.progress, required this.progressText});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +17,8 @@ class ProgressIndicatorWidget extends StatelessWidget {
         animation: true,
         lineHeight: 20.0,
         animationDuration: 2500,
-        percent: 0.8,
-        center: const Text("80.0%"),
+        percent: progress,
+        center: Text(progressText),
         linearStrokeCap: LinearStrokeCap.roundAll,
         progressColor: progressColor,
         backgroundColor: backgroundColor,

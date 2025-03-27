@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:milestone_tracker_of_infants/features/milestones/presentation/widgets/stacked_card.dart';
 
 class QuestionCard extends StatelessWidget {
-  const QuestionCard({super.key});
+  final String question;
+  final String font;
+  const QuestionCard({super.key, required this.question, required this.font});
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,10 @@ class QuestionCard extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Center(
                   child: Text(
-                    'Has your baby taken their first steps yet? 👣👶',
+                    question,
                     style: TextStyle(
-                      fontFamily: 'KleeOne',
+                      fontFamily: font,
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
                   ),

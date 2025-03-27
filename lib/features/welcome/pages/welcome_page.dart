@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:milestone_tracker_of_infants/presentation/common/widgets/icon_container.dart';
 import 'package:milestone_tracker_of_infants/presentation/common/widgets/primary_button.dart';
 
@@ -41,17 +42,11 @@ class WelcomePage extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-        // child: ElevatedButton(
-        //   onPressed: () {}, 
-        //   style: ElevatedButton.styleFrom(
-        //     padding: const EdgeInsets.symmetric(vertical: 15),
-        //     textStyle: const TextStyle(fontSize: 18),
-        //   ),
-        //   child: const Text('Get Started'),
-        // ),
         child: PrimaryButton(
           label: 'Continue',
-          onTap: () {},
+          onTap: () {
+            context.go('/');
+          },
         )
       ),
     );

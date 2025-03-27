@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:milestone_tracker_of_infants/core/utils/total_progress_calculator.dart';
 import 'package:milestone_tracker_of_infants/features/home/presentation/widgets/status_progress_bar.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class MilestoneProgressCard extends StatelessWidget {
-  const MilestoneProgressCard({super.key});
-
+  final List<Map<String, dynamic>> data;
+  const MilestoneProgressCard({super.key, required this.data});
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,29 +24,29 @@ class MilestoneProgressCard extends StatelessWidget {
                     'Milestone Checklist',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w400,
-                    ),
+                          fontWeight: FontWeight.w400,
+                        ),
                   ),
                   const SizedBox(height: 20),
                   CircularPercentIndicator(
                     radius: 60,
-                    lineWidth: 8.0,
-                    percent: 0.3,
+                    lineWidth: 12.0,
+                    percent: TotalProgressCalculator.calculateMilestoneProgress(data),
                     center: Text(
-                      '30%',
+                      '${TotalProgressCalculator.calculateMilestoneProgress(data)*100}%',
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     progressColor: Colors.blueAccent,
-                    backgroundColor: Colors.grey[300]!,
+                    backgroundColor: Colors.grey[100]!,
+                    circularStrokeCap: CircularStrokeCap.round
                   ),
                   const SizedBox(height: 16),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(
-                      children: List.generate(
-                        5,
-                        (index) => const StatusProgressBar(),
-                      ),
+                      children: data.map((item) => StatusProgressBar(
+                        categoryProgress: item,
+                      )).toList(),
                     ),
                   ),
                 ],
