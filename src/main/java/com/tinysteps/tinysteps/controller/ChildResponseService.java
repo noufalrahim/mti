@@ -1,4 +1,4 @@
-package com.tinysteps.tinysteps.service;
+package com.tinysteps.tinysteps.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
